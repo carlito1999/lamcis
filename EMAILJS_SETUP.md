@@ -68,7 +68,7 @@ const EMAILJS_CONFIG = {
 
 4. Also update the recipient email if needed:
 ```javascript
-to_email: 'your-actual-email@example.com'  // Change this to your email
+to_email: 'lefteristsegkos2@gmail.com'  // Email address for receiving notifications
 ```
 
 ## Step 6: Test the Setup
