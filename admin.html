@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Lamcis Messages</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-content">
+            <h2>Admin Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminUsername">Username:</label>
+                    <input type="text" id="adminUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password:</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+                <div id="loginError" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+        <nav class="navbar sticky-top admin-nav">
+            <div class="nav-container">
+                <h1 class="admin-title">
+                    <i class="fas fa-envelope"></i> Lamcis - Contact Messages
+                </h1>
+                <div class="admin-actions">
+                    <button id="refreshBtn" class="admin-btn">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <button id="clearAllBtn" class="admin-btn danger">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                    <button id="logoutBtn" class="admin-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="admin-content">
+            <div class="messages-stats">
+                <div class="stat-card">
+                    <i class="fas fa-envelope-open"></i>
+                    <div class="stat-info">
+                        <span id="totalMessages">0</span>
+                        <span>Συνολικά Μηνύματα</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar-day"></i>
+                    <div class="stat-info">
+                        <span id="todayMessages">0</span>
+                        <span>Σήμερα</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="messages-container">
+                <div class="messages-header">
+                    <h3>Contact Messages</h3>
+                    <div class="filter-options">
+                        <select id="sortBy">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="messagesList" class="messages-list">
+                    <!-- Messages will be populated here -->
+                </div>
+                <div id="noMessages" class="no-messages" style="display: none;">
+                    <i class="fas fa-inbox"></i>
+                    <p>Δεν υπάρχουν μηνύματα ακόμα</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin credentials (in production, this should be server-side)
+        const ADMIN_CREDENTIALS = {
+            username: 'lamcis_admin',
+            password: 'Lamcis2025!'
+        };
+
+        // Check if user is logged in
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+            if (isLoggedIn === 'true') {
+                showDashboard();
+            } else {
+                showLogin();
+            }
+        }
+
+        // Show login modal
+        function showLogin() {
+            document.getElementById('loginModal').style.display = 'flex';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        // Show admin dashboard
+        function showDashboard() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+            loadMessages();
+        }
+
+        // Handle login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                showDashboard();
+            } else {
+                document.getElementById('loginError').textContent = 'Invalid credentials!';
+            }
+        });
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            sessionStorage.removeItem('adminLoggedIn');
+            showLogin();
+        });
+
+        // Load and display messages
+        function loadMessages() {
+            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            const sortBy = document.getElementById('sortBy').value;
+            
+            // Sort messages
+            messages.sort((a, b) => {
+                if (sortBy === 'newest') {
+                    return b.id - a.id;
+                } else {
+                    return a.id - b.id;
+                }
+            });
+
+            // Update stats
+            document.getElementById('totalMessages').textContent = messages.length;
+            
+            const today = new Date().toDateString();
+            const todayMessages = messages.filter(msg => 
+                new Date(msg.timestamp).toDateString() === today
+            ).length;
+            document.getElementById('todayMessages').textContent = todayMessages;
+
+            // Display messages
+            const messagesList = document.getElementById('messagesList');
+            const noMessages = document.getElementById('noMessages');
+            
+            if (messages.length === 0) {
+                messagesList.innerHTML = '';
+                noMessages.style.display = 'block';
+                return;
+            }
+
+            noMessages.style.display = 'none';
+            messagesList.innerHTML = messages.map(msg => `
+                <div class="message-card" data-id="${msg.id}">
+                    <div class="message-header">
+                        <div class="message-info">
+                            <h4>${escapeHtml(msg.name)}</h4>
+                            <span class="message-email">${escapeHtml(msg.email)}</span>
+                        </div>
+                        <div class="message-meta">
+                            <span class="message-date">${msg.timestamp}</span>
+                            <button class="delete-btn" onclick="deleteMessage(${msg.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="message-body">
+                        <p>${escapeHtml(msg.message).replace(/\n/g, '<br>')}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Delete single message
+        function deleteMessage(messageId) {
+            if (confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το μήνυμα;')) {
+                let messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+                messages = messages.filter(msg => msg.id !== messageId);
+                localStorage.setItem('contactMessages', JSON.stringify(messages));
+                loadMessages();
+            }
+        }
+
+        // Clear all messages
+        document.getElementById('clearAllBtn').addEventListener('click', function() {
+            if (confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε ΟΛΑ τα μηνύματα; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί!')) {
+                localStorage.removeItem('contactMessages');
+                loadMessages();
+            }
+        });
+
+        // Refresh messages
+        document.getElementById('refreshBtn').addEventListener('click', loadMessages);
+
+        // Sort change handler
+        document.getElementById('sortBy').addEventListener('change', loadMessages);
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>
