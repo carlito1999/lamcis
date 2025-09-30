@@ -1,0 +1,269 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Styles the main hero banner section */
+.hero-section {
+    background: url("media/keria.png") no-repeat center / cover;
+    height: 93vh;
+}
+
+/* Styles the main heading in the hero section */
+.hero-section h1 {
+    font-size: 3.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin: 20px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    place-items: center;
+}
+
+/* Styles the paragraph text in the hero section */
+.hero-section p {
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(20, 2, 2, 0.5);
+}
+
+/* Styles both feature and testimonial boxes with shared properties */
+.feature-box, .testimonial-box {
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 4px;
+}
+
+/* Hover effect for feature and testimonial boxes */
+.feature-box:hover, .testimonial-box:hover {
+    transform: translateY(-10px);
+}
+
+/* Styles product card images */
+.card img {
+    height: 250px;
+    object-fit: cover;
+}
+
+/* Mobile responsive adjustments for screens under 768px */
+@media (max-width: 768px) {
+    .hero-section {
+        height: 60vh;
+    }
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+    .hero-section p {
+        font-size: 1.2rem;
+    }
+}
+
+/* Styles the contact us button in the navigation */
+.navbtn {
+    background-color: #c4829d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    height: 50px;  /* Match logo height */
+    width: auto;   /* Auto width like logo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+/* Styles the company logo in the navigation */
+.logo {
+    height: auto;
+    width: auto;
+    border-radius: 15px;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    max-height: 50px; /* Ensure logo height matches button height */
+}
+
+/* Styles the main navigation bar container */
+.navbar {
+    position: relative;
+    padding: 10px;
+    height: 70px; /* Ensure navbar height accommodates logo and button */
+
+}
+
+/* Navbar transformation */
+.navbar-transparent {
+    transform: translateY(0px);
+}
+
+/* Image responsive classes */
+.me-2 {
+    margin-right: 0.5rem;
+}
+
+.d-none {
+    display: none;
+}
+
+.d-sm-inline {
+    display: inline;
+}
+
+/* Text alignment classes */
+.text-center {
+    text-align: center;
+}
+
+/* Background utility classes */
+.bg-light {
+    background-color: #f8f9fa;
+}
+
+/* Height utility */
+.h-100 {
+    height: 100%;
+}
+
+/* Shadow utilities */
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+}
+
+/* Text style utilities */
+.text-muted {
+    color: #6c757d;
+}
+
+.text-success {
+    color: #198754;
+}
+
+.fst-italic {
+    font-style: italic;
+}
+
+.text-white {
+    color: white;
+}
+
+/* Button width utility */
+.w-100 {
+    width: 100%;
+}
+
+/* Navigation Styles */
+.nav-container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.brand {
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Hero Section Styles */
+.hero-container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    height: 60vh;  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    }
+
+.hero-title {
+    font-size: calc(1.525rem + 3.3vw);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+}
+
+.hero-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    border-radius: 0.3rem;
+    background-color: #f8f9fa;
+    color: #000;
+    text-decoration: none;
+    margin-top: 1.5rem;
+}
+
+/* Section Styles */
+.section-container {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    text-align: center;
+    width: auto;
+    height: auto;
+    border-radius: 3px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
+    text-align: center;
+    border-radius: 3;
+}
+
+.feature-box {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease;
+    text-align: center;
+    border-radius: 3px;
+}
+
+/* Responsive Grid */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+/* Utility Classes */
+.fw-bold {
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.rounded {
+    border-radius: 0.25rem;
+}
+
+.salesbox { 
+    padding: 1rem;
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease;
+    text-align: center;
+    border-radius: 3px;
+}
