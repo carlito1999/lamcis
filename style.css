@@ -38,38 +38,109 @@ body {
     color: inherit;
 }
 
-.logo {
-    height: auto;
-    width: auto;
-    border-radius: 15px;
+.logo-button {
+    background: linear-gradient(135deg, #c4829d, #e9a2c3);
+    color: white;
+    padding: 14px 30px;
+    border-radius: 0px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    box-shadow: 0 6px 20px rgba(196, 130, 157, 0.3);
+    transition: all 0.4s ease;
     position: absolute;
-    top: 10px;
-    left: 20px;
-    max-height: 50px;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+    overflow: hidden;
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.logo-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+    z-index: -1;
+}
+
+.logo-button:hover::before {
+    left: 100%;
+}
+
+.logo-button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(196, 130, 157, 0.4);
+    background: linear-gradient(135deg, #a66d88, #c4829d);
+    color: white;
+    text-decoration: none;
+}
+
+.logo-button:active {
+    transform: translateY(0) scale(1.02);
 }
 
 .navbtn {
-    background-color: #c4829d;
-    color: #ffebdfad;
+    background: linear-gradient(135deg, #c4829d, #e9a2c3);
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 0px;
     position: absolute;
-    top: 10px;
-    right: 20px;
-    height: 50px;
+    top: 0px;
+    right: 0px;
+    height: 70px;
+    font-family: 'Dancing Script', cursive;
     width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 20px;
+    padding: 0 25px;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(196, 130, 157, 0.4);
+    transition: all 0.4s ease;
+    z-index: 1000;
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.navbtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+    z-index: -1;
+}
+
+.navbtn:hover::before {
+    left: 100%;
 }
 
 .navbtn:hover {
-    background-color: #a66d88;
-    color: #ffebdfad;
+    transform: translateY(0px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(196, 130, 157, 0.6);
+    background: linear-gradient(135deg, #a66d88, #c4829d);
+    color: white;
     text-decoration: none;
+}
+
+.navbtn:active {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 5px 15px rgba(196, 130, 157, 0.4);
 }
 
 /* ===== HERO SECTION STYLES ===== */
@@ -112,21 +183,21 @@ body {
     font-weight: bold;
     margin-bottom: 0.5rem;
     text-align: center;
-    color: rgb(0, 0, 0);
+    color: #c4829d;
     text-shadow: 
         2px 2px 4px rgba(255, 255, 255, 0.8),
         0 0 8px rgba(255, 255, 255, 0.6);
-    -webkit-text-stroke: 1px #e9a2c381;
+    -webkit-text-stroke: 0.8px #ffffff81;
 }
 
 .hero-subtitle {
     font-size: 1.25rem;
     margin-top: 1rem;
-    color: rgb(0, 0, 0);
+    color: #c4829d;
     text-shadow: 
         0px 0px 0px rgba(255, 255, 255, 0.8),
         0 0 0px rgba(255, 255, 255, 0.6);
-    -webkit-text-stroke: 0.3px #e9a2c38c;
+    -webkit-text-stroke: 0.3px #ffffff8c;
 }
 
 .hero-button {
